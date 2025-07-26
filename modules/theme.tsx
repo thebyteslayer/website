@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { MdOutlineDarkMode, MdOutlineLightMode } from 'react-icons/md';
+import { HiOutlineComputerDesktop } from 'react-icons/hi2';
 
 export type ThemeMode = 'system' | 'light' | 'dark';
 export type EffectiveTheme = 'light' | 'dark';
@@ -70,11 +72,11 @@ export default function ThemeControl({ onThemeChange }: ThemeControlProps = {}) 
     }
   }, [activeTheme, systemTheme, onThemeChange, mounted]);
 
-  const getDisplayLabel = (theme: ThemeMode): string => {
+  const getDisplayLabel = (theme: ThemeMode): React.ReactNode => {
     switch (theme) {
-      case 'system': return 'S';
-      case 'light': return 'L';
-      case 'dark': return 'D';
+      case 'system': return <HiOutlineComputerDesktop size={14} />;
+      case 'light': return <MdOutlineLightMode size={14} />;
+      case 'dark': return <MdOutlineDarkMode size={14} />;
     }
   };
 
