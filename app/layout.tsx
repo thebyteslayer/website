@@ -1,20 +1,27 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "TheByteSlayer.com",
-  description: "I make stuff",
+  description: "Im a software developer and reverse engineer. I make stuff.",
+  keywords: "software, development, programming, web, hosting, reverse engineering, ByteSlayer, byteslayer, Bytee, bytee, thebyteslayer, TheByteSlayer",
+  authors: [{ name: "TheByteSlayer" }],
+  creator: "TheByteSlayer",
+  publisher: "TheByteSlayer",
+  robots: "index, follow",
+  openGraph: {
+    title: "TheByteSlayer.com",
+    description: "Im a software developer and reverse engineer. I make stuff.",
+    url: "https://thebyteslayer.com",
+    siteName: "TheByteSlayer.com",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "TheByteSlayer.com",
+    description: "Im a software developer and reverse engineer. I make stuff.",
+  },
+  metadataBase: new URL("https://thebyteslayer.com"),
 };
 
 export default function RootLayout({
@@ -24,9 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body>
         {children}
       </body>
     </html>
