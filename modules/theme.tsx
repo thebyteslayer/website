@@ -63,6 +63,9 @@ export default function ThemeControl({ onThemeChange }: ThemeControlProps = {}) 
   const handleThemeClick = (theme: ThemeMode) => {
     setActiveTheme(theme);
     setCookie('theme-preference', theme);
+    
+    const newEffectiveTheme: EffectiveTheme = theme === 'system' ? systemTheme : theme as 'light' | 'dark';
+    onThemeChange?.(newEffectiveTheme);
   };
 
   useEffect(() => {
