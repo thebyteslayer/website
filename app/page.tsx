@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import Button from '../modules/button';
-import ComingSoon from '../modules/coming-soon';
-import ThemeControl, { EffectiveTheme } from '../modules/theme';
+import Button from '../modules/Button';
+import ComingSoon from '../modules/ComingSoon';
+import ThemeControl, { EffectiveTheme } from '../modules/Theme';
 
 export default function Home() {
   const [currentTheme, setCurrentTheme] = useState<EffectiveTheme>('light');

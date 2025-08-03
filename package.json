@@ -1,12 +1,11 @@
 {
   "name": "thebyteslayer",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "bun --bun next dev",
     "build": "bun --bun next build",
-    "start": "bun --bun next start",
-    "lint": "bun --bun next lint"
+    "start": "bun --bun next start"
   },
   "dependencies": {
     "@vercel/analytics": "^1.5.0",
