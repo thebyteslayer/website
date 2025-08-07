@@ -13,6 +13,7 @@ const EntryLog: React.FC<EntryLogProps> = ({ theme = 'light', autoStart = true, 
   const [visibleLines, setVisibleLines] = useState<number>(0);
   const [isComplete, setIsComplete] = useState(false);
   const [shouldHide, setShouldHide] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const logLines = [
     'Running build in Washington, D.C., USA (East) – iad1',
@@ -52,6 +53,17 @@ const EntryLog: React.FC<EntryLogProps> = ({ theme = 'light', autoStart = true, 
   }, [autoStart, speed, logLines.length]);
 
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
     if (isComplete) {
       const hideTimer = setTimeout(() => {
         setShouldHide(true);
@@ -76,9 +88,9 @@ const EntryLog: React.FC<EntryLogProps> = ({ theme = 'light', autoStart = true, 
     height: '100vh',
     zIndex: 9999,
     fontFamily: 'monospace',
-    fontSize: '14px',
-    lineHeight: '1.5',
-    padding: '40px',
+    fontSize: isMobile ? '10px' : '14px',
+    lineHeight: isMobile ? '1.3' : '1.5',
+    padding: isMobile ? '12px' : '40px',
     backgroundColor: isDark ? '#000000' : '#fafafa',
     color: isDark ? '#ffffff' : '#000000',
     overflow: 'hidden',
@@ -92,7 +104,10 @@ const EntryLog: React.FC<EntryLogProps> = ({ theme = 'light', autoStart = true, 
 
   const lineStyle = (index: number): React.CSSProperties => ({
     opacity: index < visibleLines ? 1 : 0,
-    marginBottom: '2px'
+    marginBottom: isMobile ? '1px' : '2px',
+    wordWrap: 'break-word',
+    overflowWrap: 'break-word',
+    maxWidth: '100%'
   });
 
   return (

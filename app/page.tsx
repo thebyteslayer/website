@@ -9,6 +9,7 @@ import ThemeControl, { EffectiveTheme } from '../modules/Theme';
 export default function Home() {
   const [currentTheme, setCurrentTheme] = useState<EffectiveTheme>('light');
   const [showEntryLog, setShowEntryLog] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   const handleThemeChange = (effectiveTheme: EffectiveTheme) => {
     setCurrentTheme(effectiveTheme);
@@ -17,6 +18,17 @@ export default function Home() {
   const handleEntryLogComplete = () => {
     setShowEntryLog(false);
   };
+
+  React.useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const backgroundColor = currentTheme === 'dark' ? '#000000' : '#fafafa';
 
@@ -61,10 +73,10 @@ export default function Home() {
           justifyContent: 'center',
           width: '100%',
           maxWidth: '800px',
-          padding: '20px'
+          padding: isMobile ? '16px' : '20px'
         }}>
           <ComingSoon theme={currentTheme} />
-          <div style={{ marginTop: '3rem' }}>
+          <div style={{ marginTop: isMobile ? '2rem' : '3rem' }}>
             <div 
               onClick={() => window.open('https://money.thebyteslayer.com', '_blank')}
               style={{ display: 'inline-block', cursor: 'pointer' }}
@@ -77,7 +89,7 @@ export default function Home() {
         </div>
         <div style={{
           position: 'absolute',
-          bottom: '20px',
+          bottom: isMobile ? '16px' : '20px',
           left: '50%',
           transform: 'translateX(-50%)'
         }}>
