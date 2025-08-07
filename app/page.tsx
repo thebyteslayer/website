@@ -3,13 +3,19 @@
 import React, { useState } from 'react';
 import Button from '../modules/Button';
 import ComingSoon from '../modules/ComingSoon';
+import EntryLog from '../modules/EntryLog';
 import ThemeControl, { EffectiveTheme } from '../modules/Theme';
 
 export default function Home() {
   const [currentTheme, setCurrentTheme] = useState<EffectiveTheme>('light');
+  const [showEntryLog, setShowEntryLog] = useState(true);
 
   const handleThemeChange = (effectiveTheme: EffectiveTheme) => {
     setCurrentTheme(effectiveTheme);
+  };
+
+  const handleEntryLogComplete = () => {
+    setShowEntryLog(false);
   };
 
   const backgroundColor = currentTheme === 'dark' ? '#000000' : '#fafafa';
@@ -26,6 +32,18 @@ export default function Home() {
           overscroll-behavior: none;
         }
       `}</style>
+      
+      {/* EntryLog overlay - shows first, then disappears */}
+      {showEntryLog && (
+        <EntryLog 
+          theme={currentTheme} 
+          autoStart={true} 
+          speed={50} 
+          onComplete={handleEntryLogComplete}
+        />
+      )}
+      
+      {/* Main page content - always rendered but hidden behind EntryLog initially */}
       <div style={{
         minHeight: '100vh',
         backgroundColor,
@@ -40,7 +58,10 @@ export default function Home() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          width: '100%',
+          maxWidth: '800px',
+          padding: '20px'
         }}>
           <ComingSoon theme={currentTheme} />
           <div style={{ marginTop: '3rem' }}>
