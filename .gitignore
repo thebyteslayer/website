@@ -1,3 +1,4 @@
-/node_modules
+.next/
+node_modules/
 bun.lock
 next-env.d.ts
