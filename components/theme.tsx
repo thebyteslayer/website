@@ -39,15 +39,7 @@ const getSystemTheme = (): 'light' | 'dark' => {
 
 const applyTheme = (theme: Theme) => {
   const effectiveTheme = theme === 'system' ? getSystemTheme() : theme;
-  const body = document.body;
-
-  if (effectiveTheme === 'dark') {
-    body.style.backgroundColor = '#000000';
-    body.style.color = '#ffffff';
-  } else {
-    body.style.backgroundColor = '#ffffff';
-    body.style.color = '#000000';
-  }
+  document.documentElement.setAttribute('data-theme', effectiveTheme);
 };
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {

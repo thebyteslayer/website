@@ -12,7 +12,6 @@ interface ThemeControlProps {
   onThemeChange?: (effectiveTheme: EffectiveTheme) => void;
 }
 
-
 export default function ThemeSwitch({ onThemeChange }: ThemeControlProps = {}) {
   const { theme: activeTheme, setTheme } = useTheme();
   const [hoveredTheme, setHoveredTheme] = useState<ThemeMode | null>(null);
@@ -42,87 +41,59 @@ export default function ThemeSwitch({ onThemeChange }: ThemeControlProps = {}) {
     }
   };
 
-  const circleStyle = (theme: ThemeMode, isActive: boolean) => {
-    let marginLeft = '0';
-    if (theme === 'system') marginLeft = '-0.5px';
-    if (theme === 'light') marginLeft = '0px';
-    if (theme === 'dark') marginLeft = '-0.5px';
-
+  const getCircleClasses = (theme: ThemeMode) => {
+    const isActive = activeTheme === theme;
+    const isHovered = hoveredTheme === theme;
     const effectiveTheme = getEffectiveTheme();
     const isDark = effectiveTheme === 'dark';
-    const isHovered = hoveredTheme === theme;
 
-    let textColor;
-    if (isActive) {
-      textColor = isDark ? '#ffffff' : '#000000';
-    } else if (isHovered) {
-      textColor = isDark ? '#ffffff' : '#000000';
-    } else {
-      textColor = '#8f8f8f';
-    }
+    let classes = 'theme-switch-circle';
 
-    return {
-      width: 'calc(24px - 2px)',
-      height: 'calc(24px - 2px)',
-      borderRadius: '50%',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      cursor: 'pointer',
-      fontSize: '11px',
-      fontWeight: 'bold',
-      textRendering: 'optimizeLegibility' as const,
-      fontSmooth: 'always' as any,
-      WebkitFontSmoothing: 'antialiased' as any,
-      border: isActive ? `1px solid ${isDark ? '#252525' : '#e6e6e6'}` : '1px solid transparent',
-      boxSizing: 'content-box' as const,
-      backgroundColor: isActive ? (isDark ? '#0a0a0a' : '#ffffff') : 'transparent',
-      color: textColor,
-      marginLeft,
-      zIndex: isActive ? 2 : 1,
-      flexShrink: 0,
-    };
+    if (isActive) classes += ' active';
+    if (isHovered) classes += ' hovered';
+
+    // Add theme-specific classes for CSS styling
+    classes += isDark ? ' dark-theme' : ' light-theme';
+
+    return classes;
+  };
+
+  const getMarginLeft = (theme: ThemeMode) => {
+    if (theme === 'system') return '0.5px';
+    if (theme === 'light') return '1px';
+    if (theme === 'dark') return '0.5px';
+    return '0';
   };
 
   return (
-    <div
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        background: 'transparent',
-        border: `1px solid ${getEffectiveTheme() === 'dark' ? '#252525' : '#e6e6e6'}`,
-        borderRadius: 'calc(24px / 2)',
-        padding: '0px',
-        width: 'calc(72px - 2.5px)',
-        height: 'calc(24px - 2px)',
-        position: 'relative',
-        boxSizing: 'content-box' as const,
-      }}
-    >
-        <div
-          style={circleStyle('system', activeTheme === 'system')}
-          onClick={() => handleThemeClick('system')}
-          onMouseEnter={() => setHoveredTheme('system')}
-          onMouseLeave={() => setHoveredTheme(null)}
-        >
-          {getDisplayLabel('system')}
-        </div>
-        <div
-          style={circleStyle('light', activeTheme === 'light')}
-          onClick={() => handleThemeClick('light')}
-          onMouseEnter={() => setHoveredTheme('light')}
-          onMouseLeave={() => setHoveredTheme(null)}
-        >
-          {getDisplayLabel('light')}
-        </div>
-        <div
-          style={circleStyle('dark', activeTheme === 'dark')}
-          onClick={() => handleThemeClick('dark')}
-          onMouseEnter={() => setHoveredTheme('dark')}
-          onMouseLeave={() => setHoveredTheme(null)}
-        >
-          {getDisplayLabel('dark')}
-        </div>
+    <div className="theme-switch">
+      <div
+        className={getCircleClasses('system')}
+        style={{ marginLeft: getMarginLeft('system') }}
+        onClick={() => handleThemeClick('system')}
+        onMouseEnter={() => setHoveredTheme('system')}
+        onMouseLeave={() => setHoveredTheme(null)}
+      >
+        {getDisplayLabel('system')}
       </div>
+      <div
+        className={getCircleClasses('light')}
+        style={{ marginLeft: getMarginLeft('light') }}
+        onClick={() => handleThemeClick('light')}
+        onMouseEnter={() => setHoveredTheme('light')}
+        onMouseLeave={() => setHoveredTheme(null)}
+      >
+        {getDisplayLabel('light')}
+      </div>
+      <div
+        className={getCircleClasses('dark')}
+        style={{ marginLeft: getMarginLeft('dark') }}
+        onClick={() => handleThemeClick('dark')}
+        onMouseEnter={() => setHoveredTheme('dark')}
+        onMouseLeave={() => setHoveredTheme(null)}
+      >
+        {getDisplayLabel('dark')}
+      </div>
+    </div>
   );
 }

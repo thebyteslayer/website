@@ -18,6 +18,30 @@ export const metadata: Metadata = {
   description: "Software & Reverse Engineer",
 };
 
+// Script to set theme before React loads
+const ThemeScript = () => {
+  return (
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `
+          try {
+            const theme = document.cookie.split('; ').find(row => row.startsWith('theme='))?.split('=')[1] || 'system';
+            let effectiveTheme = theme;
+
+            if (theme === 'system') {
+              effectiveTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+
+            document.documentElement.setAttribute('data-theme', effectiveTheme);
+          } catch (e) {
+            document.documentElement.setAttribute('data-theme', 'light');
+          }
+        `,
+      }}
+    />
+  );
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,8 +49,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <ThemeScript />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
       >
         <ThemeProvider>
           {children}
