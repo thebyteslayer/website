@@ -18,43 +18,39 @@ export const metadata: Metadata = {
   description: "Software & Reverse Engineer",
 };
 
-// Script to set theme before React loads
-const ThemeScript = () => {
-  return (
-    <script
-      dangerouslySetInnerHTML={{
-        __html: `
-          try {
-            const theme = document.cookie.split('; ').find(row => row.startsWith('theme='))?.split('=')[1] || 'system';
-            let effectiveTheme = theme;
-
-            if (theme === 'system') {
-              effectiveTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-            }
-
-            document.documentElement.setAttribute('data-theme', effectiveTheme);
-          } catch (e) {
-            document.documentElement.setAttribute('data-theme', 'light');
-          }
-        `,
-      }}
-    />
-  );
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
-        <ThemeScript />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('theme') || 'system';
+                  var effectiveTheme = theme;
+                  
+                  if (theme === 'system') {
+                    effectiveTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                  }
+                  
+                  document.documentElement.setAttribute('data-theme', effectiveTheme);
+                  document.documentElement.style.colorScheme = effectiveTheme;
+                } catch (e) {
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  document.documentElement.style.colorScheme = 'light';
+                }
+              })();
+            `,
+          }}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        suppressHydrationWarning
       >
         <ThemeProvider>
           {children}

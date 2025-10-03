@@ -1,3 +1,5 @@
+'use client';
+
 import Button from "../../components/button";
 import ThemeSwitch from "../../components/themeSwitch";
 
