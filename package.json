@@ -1,0 +1,30 @@
+{
+  "name": "website-nuxt",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "prepare": "nuxt prepare",
+    "check": "biome check --write",
+    "lint": "biome lint --write",
+    "format": "biome format --write"
+  },
+  "dependencies": {
+    "nuxt": "^3.15.4",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0",
+    "lucide-vue-next": "^0.460.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.2.0",
+    "@nuxt/devtools": "latest",
+    "@nuxtjs/color-mode": "^3.5.1",
+    "@nuxtjs/tailwindcss": "^6.13.1",
+    "@types/node": "^20",
+    "typescript": "^5"
+  }
+}
