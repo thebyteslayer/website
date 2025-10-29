@@ -19,6 +19,7 @@
     <Button color="inverted" :effects="['highlight']">Inverted + Highlight</Button>
     <Button color="inverted" :effects="['shrink']">Inverted + Shrink</Button>
     <Button color="inverted" :effects="['highlight', 'shrink']">Inverted + Highlight + Shrink</Button>
+    <Button color="ephemeral">Ephemeral</Button>
     <ThemeSwitch />
   </div>
 </template>

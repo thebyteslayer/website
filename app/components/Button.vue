@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 
-type ColorOption = "monochrome" | "inverted";
+type ColorOption = "monochrome" | "inverted" | "ephemeral";
 type SizeOption = "medium";
 type EffectOption = "highlight" | "shrink";
 
@@ -73,6 +73,23 @@ const _buttonStyles = computed(() => {
       backgroundColor: "var(--background)",
       color: "var(--foreground)",
     };
+  }
+
+  if (props.color === "ephemeral") {
+    const ephemeralBaseStyles = {
+      ...baseStyles,
+      backgroundColor: "transparent",
+      border: "1px dashed var(--border)",
+      color: "var(--foreground)",
+    };
+
+    if (isHighlight.value && isHovered.value) {
+      return {
+        ...ephemeralBaseStyles,
+        borderColor: "var(--foreground)",
+      };
+    }
+    return ephemeralBaseStyles;
   }
 
   return baseStyles;
