@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxtjs/tailwindcss", "@nuxtjs/color-mode"],
-  css: ["~/assets/css/main.css"],
+  css: ["./app/assets/css/main.css"],
   colorMode: {
     preference: "system",
     fallback: "light",

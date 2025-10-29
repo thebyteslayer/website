@@ -1,7 +1,7 @@
 <template>
   <button
-    :style="buttonStyles"
-    @click="handleClick"
+    :style="_buttonStyles"
+    @click="_handleClick"
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
   >
@@ -34,7 +34,7 @@ const isHovered = ref(false);
 const isHighlight = computed(() => props.effects.includes("highlight"));
 const isShrink = computed(() => props.effects.includes("shrink"));
 
-const buttonStyles = computed(() => {
+const _buttonStyles = computed(() => {
   const baseStyles = {
     borderRadius: "4px",
     border: "1px solid var(--border)",
@@ -78,7 +78,7 @@ const buttonStyles = computed(() => {
   return baseStyles;
 });
 
-const handleClick = () => {
+const _handleClick = () => {
   if (props.onClick) {
     props.onClick();
   }
